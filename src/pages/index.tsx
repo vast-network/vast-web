@@ -1,193 +1,204 @@
-import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
+import React, { useState } from 'react'
+import { ArrowRight, Code, Shield, Zap, Puzzle, Rocket, ChevronDown } from 'lucide-react'
+import vImg from "../images/v.svg";
+import vLogo from "../images/vast.svg";
 
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const doclistStyles = {
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
-}
-
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-}
-
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  display: `inline-block`,
-  marginBottom: 24,
-  marginRight: 12,
-}
-
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
-}
-
-const docLinks = [
-  {
-    text: "TypeScript Documentation",
-    url: "https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/",
-    color: "#8954A8",
-  },
-  {
-    text: "GraphQL Typegen Documentation",
-    url: "https://www.gatsbyjs.com/docs/how-to/local-development/graphql-typegen/",
-    color: "#8954A8",
-  }
-]
-
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative" as "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
-}
-
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/getting-started/",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
-  },
-  {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
-    description:
-      "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
-  },
-  {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
-    description:
-      "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
-  },
-  {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
-    description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    badge: true,
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
-  },
-]
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const IndexPage: React.FC<PageProps> = () => {
+
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index)
+  }
+
+  const faqs = [
+    {
+      question: "What makes VAST different from other blockchain frameworks?",
+      answer: "VAST stands out with its minimal, modular design that allows developers to customize their blockchain stack. Unlike other frameworks that come with a fixed set of features, VAST lets you choose and combine different modules for networking, consensus, storage, and runtime, tailoring the blockchain to your specific needs."
+    },
+    {
+      question: "What virtual machines does VAST support?",
+      answer: "VAST supports multiple virtual machines, including SVM, MoveVM, WebAssembly, and EVM. This flexibility allows developers to choose the best VM for their specific project needs and enables cross-VM interactions."
+    },
+    {
+      question: "How does VAST ensure security?",
+      answer: "VAST employs a robust, modular architecture designed for secure decentralized applications. Additionally, its transparent contract system, where smart contracts are uploaded as source code and compiled by 'compiler' nodes, enhances verifiability and auditing, mitigating potential attack vectors."
+    },
+    {
+      question: "Can I upgrade my blockchain's functionality after deployment?",
+      answer: "Yes, VAST is designed with future-proofing in mind. Core functionality is provided by upgradeable system contracts, not locked into binary installs. This allows for continuous evolution and improvement of your blockchain without compromising its integrity or requiring complex migration processes."
+    },
+    {
+      question: "Is VAST suitable for enterprise use?",
+      answer: "Absolutely. VAST's scalability, security features, and future-proof design make it an excellent choice for enterprises seeking a robust blockchain solution. Its modularity allows for customization to meet specific enterprise requirements."
+    },
+    {
+      question: "Will the VAST ecosystem rely on a single client?",
+      answer: "VAST aims to foster a broad and diverse collection of clients. Client diversity is critical for ensuring stability and resilience, avoiding downtime when a single implementation has a bug. While it will initially launch with Rust support, the roadmap includes expanding to languages like V, Go, and Zig."
+    },
+    {
+      question: "How does VAST integrate with Celestia?",
+      answer: "Every VAST chain is natively Celestia compatible, allowing for the pushing of blob data to the Celestia modular blockchain network. This integration further encourages and supports modular expansion of VAST-based projects."
+    },
+    {
+      question: "How can I get started with VAST?",
+      answer: "To get started with VAST, visit our documentation page for comprehensive guides and tutorials. You can also join our developer community for support and collaboration opportunities. Don't forget to check out our GitHub repository for the latest updates and to contribute to the project."
+    }
+  ]
+
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>
-        Congratulations
-        <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
-      </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
-        update in real-time. 😎
-      </p>
-      <ul style={doclistStyles}>
-        {docLinks.map(doc => (
-          <li key={doc.url} style={docLinkStyle}>
-            <a
-              style={linkStyle}
-              href={`${doc.url}?utm_source=starter&utm_medium=ts-docs&utm_campaign=minimal-starter-ts`}
-            >
-              {doc.text}
+    <div className="flex flex-col min-h-screen">
+      <header className="px-4 lg:px-6 h-14 flex items-center justify-center">
+        <div className="w-full max-w-7xl flex justify-between items-center">
+          <a className="flex items-center justify-center" href="#">
+            <img src={vImg} className="h-12 w-12 mr-2" alt="VAST logo" />
+            <span className="font-bold text-xl">VAST</span>
+          </a>
+          <nav className="flex gap-4 sm:gap-6">
+            <a className="text-sm font-medium hover:underline underline-offset-4" href="#features">
+              Features
             </a>
-          </li>
-        ))}
-      </ul>
-      <ul style={listStyles}>
-        {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter-ts`}
-              >
-                {link.text}
-              </a>
-              {link.badge && (
-                <span style={badgeStyle} aria-label="New Badge">
-                  NEW!
-                </span>
-              )}
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <img
-        alt="Gatsby G Logo"
-        src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
-      />
-    </main>
+            <a className="text-sm font-medium hover:underline underline-offset-4" href="#about">
+              About
+            </a>
+            <a className="text-sm font-medium hover:underline underline-offset-4" href="#faq">
+              FAQ
+            </a>
+          </nav>
+        </div>
+      </header>
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black text-white">
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <div className="space-y-2">
+                <img src={vLogo} alt="VAST logo" />
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                  The Future of Blockchain Development
+                </h1>
+                <p className="mx-auto max-w-[700px] text-gray-400 md:text-xl">
+                  Redefine how you build decentralized applications with our minimal, modular blockchain framework.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="features" className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-100">
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">Why VAST?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="flex flex-col items-center text-center">
+                <Zap className="h-12 w-12 mb-4 text-primary" />
+                <h3 className="text-xl font-bold mb-2">Speed</h3>
+                <p className="text-gray-600">Faster transaction speeds and reduced latency.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <Shield className="h-12 w-12 mb-4 text-primary" />
+                <h3 className="text-xl font-bold mb-2">Security</h3>
+                <p className="text-gray-600">Robust, modular architecture for secure dApps.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <Puzzle className="h-12 w-12 mb-4 text-primary" />
+                <h3 className="text-xl font-bold mb-2">Flexibility</h3>
+                <p className="text-gray-600">Multiple VM support tailored to your needs.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <Code className="h-12 w-12 mb-4 text-primary" />
+                <h3 className="text-xl font-bold mb-2">Succinctness</h3>
+                <p className="text-gray-600">Clean, efficient codebase for faster development.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <Rocket className="h-12 w-12 mb-4 text-primary" />
+                <h3 className="text-xl font-bold mb-2">Future Proof</h3>
+                <p className="text-gray-600">Upgradeable system contracts for continuous evolution.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <ChevronDown className="h-12 w-12 mb-4 text-primary" />
+                <h3 className="text-xl font-bold mb-2">Transparent Contracts</h3>
+                <p className="text-gray-600">Smart contracts uploaded as source for better auditing.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="about" className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">The difference is VAST</h2>
+            <p className="max-w-[900px] text-gray-600 md:text-xl text-center mx-auto mb-12">
+              While other frameworks have become weighed down by unnecessary features, VAST focuses on delivering a streamlined, modular framework. With pluggable components for Networking, Consensus, Storage, Runtime, and Interoperability, VAST empowers you to build a blockchain that meets your project's unique requirements.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-gray-100 p-6 rounded-lg">
+                <h3 className="text-xl font-bold mb-4">Key Features</h3>
+                <ul className="list-disc list-inside space-y-2 text-gray-600">
+                  <li>Modular Design</li>
+                  <li>Multi-VM Support</li>
+                  <li>Core Contracts</li>
+                  <li>Smart Contract Extensibility</li>
+                  <li>Client Diversity</li>
+                  <li>Celestia Compatibility</li>
+                </ul>
+              </div>
+              <div className="bg-gray-100 p-6 rounded-lg">
+                <h3 className="text-xl font-bold mb-4">Who Is VAST For?</h3>
+                <ul className="list-disc list-inside space-y-2 text-gray-600">
+                  <li>Developers seeking faster, more efficient blockchain development</li>
+                  <li>Projects requiring modularity and flexibility</li>
+                  <li>Enterprises looking for scalable, secure, and future-proof blockchain solutions</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="faq" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">Frequently Asked Questions</h2>
+            <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index + 1}`}>
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent>
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+        <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-black text-white">
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                  Join the VAST Ecosystem
+                </h2>
+                <p className="mx-auto max-w-[700px] text-gray-400 md:text-xl">
+                  Be part of the next evolution in blockchain technology. With VAST, you're not just building on a blockchain – you're building a custom, flexible, and future-proof decentralized network.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+        <div className="w-full max-w-7xl mx-auto flex justify-between items-center">
+          <p className="text-xs text-gray-500">© 2024 VAST. All rights reserved.</p>
+          <nav className="flex gap-4 sm:gap-6">
+            {/* Footer navigation links can be added here if needed */}
+          </nav>
+        </div>
+      </footer>
+    </div>
   )
 }
 
 export default IndexPage
 
-export const Head: HeadFC = () => <title>Home Page</title>
+export const Head: HeadFC = () => <title>Something VAST is coming...</title>
